@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Toolkit - 5-in-1 Network Tools</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.5;
+        }
+
+        /* GitHub-style header */
+        .header {
+            background-color: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 16px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: #c9d1d9;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #2f81f7;
+        }
+
+        .nav a {
+            color: #c9d1d9;
+            text-decoration: none;
+            margin-left: 24px;
+            font-size: 14px;
+        }
+
+        .nav a:hover {
+            color: #2f81f7;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px 32px;
+            display: flex;
+            gap: 32px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .repo-info {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .repo-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .repo-name a {
+            color: #2f81f7;
+            text-decoration: none;
+        }
+
+        .repo-desc {
+            font-size: 14px;
+            color: #8b949e;
+            margin-bottom: 16px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #30363d;
+            margin-bottom: 24px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            color: #c9d1d9;
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            border-bottom-color: #f7812f;
+            color: #f7812f;
+        }
+
+        /* README box */
+        .readme {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .readme-header {
+            background-color: #21262d;
+            padding: 16px;
+            border-bottom: 1px solid #30363d;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .readme-content {
+            padding: 24px;
+        }
+
+        /* Typography */
+        h1 {
+            font-size: 32px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #21262d;
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 12px;
+        }
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        code {
+            background-color: #21262d;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: 'SF Mono', Monaco, 'Courier New', monospace;
+            font-size: 12px;
+            color: #c9d1d9;
+        }
+
+        pre {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            margin-bottom: 16px;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            font-size: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+        }
+
+        th, td {
+            border: 1px solid #30363d;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #21262d;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #21262d;
+            padding: 4px 8px;
+            border-radius: 24px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .button {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 8px;
+        }
+
+        .button:hover {
+            background-color: #30363d;
+        }
+
+        .button-primary {
+            background-color: #2ea043;
+            border-color: #2ea043;
+            color: white;
+        }
+
+        .button-primary:hover {
+            background-color: #3fb950;
+        }
+
+        .footer {
+            border-top: 1px solid #30363d;
+            margin-top: 48px;
+            padding: 24px 32px;
+            text-align: center;
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="#" class="logo">
+                <span>📡</span> FaizHacke/network-toolkit
+            </a>
+            <div class="nav">
+                <a href="#">Code</a>
+                <a href="#">Issues</a>
+                <a href="#">Pull requests</a>
+                <a href="#">Actions</a>
+                <a href="#">Projects</a>
+                <a href="#">Wiki</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="repo-info">
+                <div class="repo-name">
+                    <a href="#">network-toolkit</a>
+                </div>
+                <div class="repo-desc">
+                    5-in-1 network toolkit: WiFi passwords, speed test, LAN file share, IP scanner, bandwidth monitor
+                </div>
+                <div class="stats">
+                    <div class="stat">⭐ Star</div>
+                    <div class="stat">🍴 Fork</div>
+                    <div class="stat">⚠️ Issues</div>
+                </div>
+            </div>
+
+            <div class="repo-info">
+                <div style="font-weight: 600; margin-bottom: 12px;">📁 Quick Links</div>
+                <a href="#" class="button" style="width: 100%; text-align: center; margin-bottom: 8px;">📘 README</a>
+                <a href="#" class="button" style="width: 100%; text-align: center; margin-bottom: 8px;">🪟 Windows Script</a>
+                <a href="#" class="button" style="width: 100%; text-align: center;">🐧 Linux Script</a>
+            </div>
+
+            <div class="repo-info">
+                <div style="font-weight: 600; margin-bottom: 12px;">📊 Requirements</div>
+                <div>✅ Windows 10/11</div>
+                <div>✅ Linux (Ubuntu/Debian/Fedora/Arch)</div>
+                <div>✅ PowerShell (Windows)</div>
+                <div>✅ Bash (Linux)</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="tabs">
+                <a href="#" class="tab active">README.md</a>
+                <a href="#" class="tab">toolkit.ps1</a>
+                <a href="#" class="tab">toolkit.sh</a>
+                <a href="#" class="tab">License</a>
+            </div>
+
+            <div class="readme">
+                <div class="readme-header">
+                    📄 README.md
+                </div>
+                <div class="readme-content">
+                    <h1>🔧 Network Toolkit</h1>
+                    <p><strong>5 essential network tools in ONE command-line application</strong></p>
+
+                    <div style="margin: 16px 0;">
+                        <span class="badge">✓ Windows</span>
+                        <span class="badge">✓ Linux</span>
+                        <span class="badge">✓ Open Source</span>
+                        <span class="badge">✓ Free</span>
+                    </div>
+
+                    <h2>🚀 Features</h2>
+                    <table>
+                        <thead>
+                            <tr><th>#</th><th>Tool</th><th>What it does</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1</td><td>📶 WiFi Password Manager</td><td>View & backup all saved WiFi passwords</td></tr>
+                            <tr><td>2</td><td>📊 Network Speed Tester</td><td>Test download speed & ping latency</td></tr>
+                            <tr><td>3</td><td>📁 LAN File Share</td><td>Share files instantly on local network</td></tr>
+                            <tr><td>4</td><td>🌐 IP Scanner</td><td>Find all devices connected to your WiFi</td></tr>
+                            <tr><td>5</td><td>📈 Network Usage Monitor</td><td>See which apps use bandwidth</td></tr>
+                            <tr><td>6</td><td>🚀 RUN ALL</td><td>Run all 5 tools automatically!</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h2>🪟 Windows Installation</h2>
+                    <p><strong>Step 1:</strong> Open PowerShell as Administrator (Windows + X → PowerShell Admin)</p>
+                    <p><strong>Step 2:</strong> Copy and paste this command:</p>
+                    <pre><code>irm https://raw.githubusercontent.com/FaizHacke/network-toolkit/main/toolkit.ps1 | iex</code></pre>
+
+                    <h2>🐧 Linux Installation</h2>
+                    <p><strong>Step 1:</strong> Open Terminal (Ctrl + Alt + T)</p>
+                    <p><strong>Step 2:</strong> Copy and paste this command:</p>
+                    <pre><code>curl -sSL https://raw.githubusercontent.com/FaizHacke/network-toolkit/main/toolkit.sh | bash</code></pre>
+
+                    <h2>📸 Demo</h2>
+                    <pre><code>===== NETWORK TOOLKIT =====
+
+ 1. 📶 WiFi Password Manager
+ 2. 📊 Network Speed Tester
+ 3. 📁 LAN File Share
+ 4. 🌐 IP Scanner
+ 5. 📈 Network Usage Monitor
+ 6. 🚀 RUN ALL TOOLS
+ 7. 🚪 Exit
+
+Choose option (1-7):</code></pre>
+
+                    <h2>🎯 Quick Start</h2>
+                    <p>After running the toolkit, press <code>6</code> to automatically run all 5 tools!</p>
+
+                    <div style="background-color: #21262d; border-left: 4px solid #2ea043; padding: 16px; margin: 16px 0; border-radius: 6px;">
+                        <strong>💡 Pro Tip:</strong> Run as Administrator (Windows) or with sudo (Linux) for full features!
+                    </div>
+
+                    <h2>📊 Tool Details</h2>
+
+                    <h3>1. 📶 WiFi Password Manager</h3>
+                    <p>Shows ALL WiFi networks your computer has connected to and their passwords. Option to backup to text file.</p>
+
+                    <h3>2. 📊 Network Speed Tester</h3>
+                    <p>Tests your actual download speed and ping latency. Rates your connection as Excellent/Good/Slow.</p>
+
+                    <h3>3. 📁 LAN File Share</h3>
+                    <p>Turns your computer into a file server. Share files with anyone on your WiFi network.</p>
+
+                    <h3>4. 🌐 IP Scanner</h3>
+                    <p>Scans your network and shows all connected devices with their IP addresses and hostnames.</p>
+
+                    <h3>5. 📈 Network Usage Monitor</h3>
+                    <p>Shows which applications are using your network bandwidth with visual connection bars.</p>
+
+                    <h3>6. 🚀 RUN ALL</h3>
+                    <p>Automatically runs Tools 1-5 and generates a complete report!</p>
+
+                    <h2>📄 Output Files</h2>
+                    <ul>
+                        <li><code>wifi_backup_YYYY-MM-DD_HH-MM.txt</code> - Backup of all WiFi passwords</li>
+                        <li><code>network_report_YYYY-MM-DD_HH-MM.txt</code> - Complete diagnostic report</li>
+                    </ul>
+
+                    <h2>🛠️ Tech Stack</h2>
+                    <ul>
+                        <li><strong>Windows:</strong> PowerShell, netsh, winget</li>
+                        <li><strong>Linux:</strong> Bash, nmcli, netstat, ping, curl</li>
+                    </ul>
+
+                    <h2>📈 Roadmap</h2>
+                    <ul>
+                        <li>✅ WiFi password manager</li>
+                        <li>✅ Speed test tool</li>
+                        <li>✅ LAN file sharing</li>
+                        <li>✅ IP scanner</li>
+                        <li>✅ Bandwidth monitor</li>
+                        <li>✅ Run all feature</li>
+                        <li>🔄 GUI version (coming soon)</li>
+                        <li>🔄 Upload speed test (coming soon)</li>
+                        <li>🔄 Save history (coming soon)</li>
+                    </ul>
+
+                    <h2>🤝 Contributing</h2>
+                    <p>Found a bug? Have a suggestion? Open an issue on GitHub!</p>
+
+                    <div style="display: flex; gap: 16px; margin-top: 24px;">
+                        <a href="#" class="button button-primary">⭐ Star this repo</a>
+                        <a href="#" class="button">🍴 Fork</a>
+                        <a href="#" class="button">⚠️ Report issue</a>
+                    </div>
+
+                    <hr style="border-color: #30363d; margin: 24px 0;">
+
+                    <p style="text-align: center; color: #8b949e;">
+                        Made with ❤️ by FaizHacke | MIT License
+                    </p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 FaizHacke · network-toolkit · MIT License</p>
+    </footer>
+</body>
+</html>
